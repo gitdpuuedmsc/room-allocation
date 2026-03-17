@@ -565,7 +565,7 @@ const G4 = GROUPS["4"];
 const TOTAL_STEPS = 6;
 
 // ── Google Apps Script URL ──
-const SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwy9Dz9OVqEiXHfIMjIFK_VdJpy7khSOxFhnUZuXSw2sbDyQDtY_aYMwtUrJeuTKlFK/exec";
 
 let selectedName = "";
 let selectedGroup = 0;
@@ -702,7 +702,7 @@ async function submitForm() {
   document.querySelector('#step-6').classList.add('loading');
 
   try {
-    if (SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+    if (SHEET_URL !== "https://script.google.com/macros/s/AKfycbwy9Dz9OVqEiXHfIMjIFK_VdJpy7khSOxFhnUZuXSw2sbDyQDtY_aYMwtUrJeuTKlFK/exec") {
       const params = new URLSearchParams();
       Object.entries(data).forEach(([k, v]) => params.append(k, v));
       await fetch(SHEET_URL, {

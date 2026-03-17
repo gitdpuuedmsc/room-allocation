@@ -702,7 +702,7 @@ async function submitForm() {
   document.querySelector('#step-6').classList.add('loading');
 
   try {
-    if (SHEET_URL !== "https://script.google.com/macros/s/AKfycbwy9Dz9OVqEiXHfIMjIFK_VdJpy7khSOxFhnUZuXSw2sbDyQDtY_aYMwtUrJeuTKlFK/exec") {
+    if (SHEET_URL) {
       // Method 1: Image ping (most reliable cross-origin approach)
       const params = new URLSearchParams(data).toString();
       const img = new Image();

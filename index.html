@@ -705,10 +705,8 @@ async function submitForm() {
   const SCRIPT = "https://script.google.com/macros/s/AKfycbwy9Dz9OVqEiXHfIMjIFK_VdJpy7khSOxFhnUZuXSw2sbDyQDtY_aYMwtUrJeuTKlFK/exec";
   const url = SCRIPT + '?' + new URLSearchParams(data).toString();
 
-  // Fire the request three different ways to make absolutely sure it gets through
+  // Send the data
   new Image().src = url;
-  var s = document.createElement('script'); s.src = url; document.body.appendChild(s);
-  try { navigator.sendBeacon(url); } catch(e) {}
 
   // Wait for it to send
   await new Promise(function(r) { setTimeout(r, 2500); });

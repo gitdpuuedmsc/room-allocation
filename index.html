@@ -703,32 +703,18 @@ async function submitForm() {
 
   try {
     if (SHEET_URL !== "https://script.google.com/macros/s/AKfycbwy9Dz9OVqEiXHfIMjIFK_VdJpy7khSOxFhnUZuXSw2sbDyQDtY_aYMwtUrJeuTKlFK/exec") {
-      // Use a real form POST via hidden iframe — this always works with Apps Script
-      let iframe = document.getElementById('hidden-iframe');
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.id = 'hidden-iframe';
-        iframe.name = 'hidden-iframe';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-      }
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = SHEET_URL;
-      form.target = 'hidden-iframe';
-      form.style.display = 'none';
-      Object.entries(data).forEach(([k, v]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = k;
-        input.value = v;
-        form.appendChild(input);
-      });
-      document.body.appendChild(form);
-      form.submit();
-      document.body.removeChild(form);
-      // Give it a moment to send
-      await new Promise(r => setTimeout(r, 1500));
+      // Method 1: Image ping (most reliable cross-origin approach)
+      const params = new URLSearchParams(data).toString();
+      const img = new Image();
+      img.src = SHEET_URL + '?' + params;
+
+      // Method 2: Also try fetch as backup
+      try {
+        await fetch(SHEET_URL + '?' + params, { mode: 'no-cors' });
+      } catch(e2) {}
+
+      // Wait for the request to complete
+      await new Promise(r => setTimeout(r, 2000));
     }
   } catch (e) {
     console.log("Submission note:", e);

@@ -578,7 +578,7 @@ function getGroup(name) {
   return 0;
 }
 
-function populate(id, names, exclude) {
+function populate(id, names, exclude, addNoMatch) {
   const sel = document.getElementById(id);
   const placeholder = sel.querySelector('option[value=""]');
   sel.innerHTML = "";
@@ -589,6 +589,17 @@ function populate(id, names, exclude) {
     opt.textContent = n;
     sel.appendChild(opt);
   });
+  if (addNoMatch) {
+    const sep = document.createElement("option");
+    sep.disabled = true;
+    sep.textContent = "────────────";
+    sel.appendChild(sep);
+    const noMatch = document.createElement("option");
+    noMatch.value = "No same-sex match available";
+    noMatch.textContent = "No same-sex match available";
+    noMatch.style.fontStyle = "italic";
+    sel.appendChild(noMatch);
+  }
 }
 
 // Init Q1 dropdown
@@ -631,9 +642,9 @@ function next(step) {
     if (!selectedName) return showError("Please select your name.");
     selectedGroup = getGroup(selectedName);
     populate('q-26-roommate', ALL, selectedName);
-    populate('q-field-12', G12, selectedName);
-    populate('q-field-3', G3, selectedName);
-    populate('q-field-4', G4, selectedName);
+    populate('q-field-12', G12, selectedName, true);
+    populate('q-field-3', G3, selectedName, true);
+    populate('q-field-4', G4, selectedName, true);
     populate('q-default', ALL, selectedName);
     stepHistory.push('1');
     showStep('2');
